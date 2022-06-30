@@ -18,7 +18,7 @@ export class Store{
     update(account : BankAccount){
         for(let i = 0; i < this.accounts.length; i++){
             if (this.accounts[i].getId === account.getId){
-                
+                //da finire
             }
         }
     }
