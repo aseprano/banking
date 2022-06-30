@@ -6,7 +6,23 @@ export class BankAccountService{
 
     create(){
         let max = 10000;
-        let id = Math.floor(Math.random() * (max + 1)); //rivedere assegnazione id
+        let id = Math.floor(Math.random() * (max + 1));
+        while(true){
+            let check = false;
+            for(let i = 0; i < this.accounts.accounts.length; i++){
+                if(this.accounts.accounts[i].getId() === id){
+                    id = Math.floor(Math.random() * (max + 1));
+                    check = false;
+                    break;
+                }
+                else{
+                    check = true;
+                }
+            }
+            if(check){
+                break;
+            }
+        }
         let account = new BankAccount();
         account.setId(id)
         this.accounts.add(account);
