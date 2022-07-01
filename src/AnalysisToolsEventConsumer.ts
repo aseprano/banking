@@ -13,14 +13,14 @@ export class AnalysisToolsEventConsumer implements EventConsumer{
     onEvent(event: Event): void {
             switch (event.name){
                 case "charge":
-                        this.analysisTools.Deposit(event.payload[0], event.payload[1])
+                        this.analysisTools.Deposit(event.payload[1], event.payload[0])
                         this.analysisTools.PrintMap();
                         break;
                 case "create":
                         this.analysisTools.CreateAccount(event.payload[0], 0)
                         break; 
                 case "withdraw": 
-                        this.analysisTools.Withdraw(event.payload[0], event.payload[1])
+                        this.analysisTools.Withdraw(event.payload[1], event.payload[0])
                         this.analysisTools.PrintMap()
                         break;
             }
