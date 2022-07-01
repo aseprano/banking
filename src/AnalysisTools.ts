@@ -2,9 +2,9 @@ import { addAbortSignal } from "stream";
 
 export class AnalysisTools {
     AnalysisTools(){};
-    AccountMap = new Map <number, number>();
+    AccountMap = new Map <string, number>();
 
-    Withdraw(amount : number, id: number){
+    Withdraw(amount : number, id: string) : void{
         const currentBalance = this.AccountMap.get(id);
         if(currentBalance === undefined){
             this.CreateAccount(id, 0)
@@ -16,7 +16,7 @@ export class AnalysisTools {
         }
     }
 
-    Deposit(amount : number, id : number) : void{
+    Deposit(amount : number, id : string) : void{
         const currentBalance = this.AccountMap.get(id);
         if(currentBalance === undefined){
             this.CreateAccount(id, amount)
@@ -29,7 +29,7 @@ export class AnalysisTools {
     OrderList() : void{
             let cont : boolean = true;
             let arr = Array.from(this.AccountMap)
-            let plcHldr0 : number
+            let plcHldr0 : string
             let plcHldr1 : number
 
             while(cont === true){
@@ -52,36 +52,35 @@ export class AnalysisTools {
             this.AccountMap = new Map(arr)
     }
 
-    GetMap() : Map<number, number> {
+    GetMap() : Map<string, number> {
         return this.AccountMap;
     }
 
-    PrintMap(range : number){
-        let oldMap = this.AccountMap;
+    PrintMap() : void {
+        let oldMap = Array.from(this.AccountMap);
         let print : boolean = false;
         this.OrderList();
-        let firstOldKey = oldMap.keys();
-        let firstNewKey = this.AccountMap.keys();
+        let newMap = Array.from(this.AccountMap)
 
-        for(let i = 0; i < range; i++){
-            if(firstNewKey===firstOldKey){
-                firstNewKey.next
-                firstOldKey.next
+        for(let i = 0; i < this.AccountMap.size; i++){
+            if(oldMap[i][0]===newMap[i][0]){
+                continue
             }
             else{
                 print = true
                 break
             }
         }
-        if(print){
+        
+        if(print === true){
             let arr = Array.from(this.AccountMap)
-            for(let i = 0; i < range; i++){
+            for(let i = 0; i < this.AccountMap.size; i++){
                 console.log(arr[i] + "\n")
             }
         }
     }
 
-    CreateAccount(id : number, amount : number) : void{
+    CreateAccount(id : string, amount : number) : void{
         this.AccountMap.set(id, amount);
     }
 }
