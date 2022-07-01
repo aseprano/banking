@@ -1,8 +1,8 @@
-abstract class AbstractEvent{
+export abstract class AbstractEvent{
 
-    private date : string = new Date().toISOString();
+    public date : string = new Date().toISOString();
 
-    constructor(private name : string){}
+    constructor(public name : string){}
 
     getName() : string{
         return this.name;
