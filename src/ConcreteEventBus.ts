@@ -16,7 +16,7 @@ export class ConcreteEventBus implements EventBus{
                     eventSubscribers[i].onEvent(event);
                 }
                 catch(Exception){
-                    console.log("Exception throun");
+                    console.log("Exception thrown");
                 }
             }
         }
