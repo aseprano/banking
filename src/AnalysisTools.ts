@@ -57,27 +57,28 @@ export class AnalysisTools {
     }
 
     PrintMap() : void {
+        console.log("printing the list");
         let oldMap = Array.from(this.AccountMap);
         let print : boolean = false;
         this.OrderList();
         let newMap = Array.from(this.AccountMap)
 
-        for(let i = 0; i < this.AccountMap.size; i++){
-            if(oldMap[i][0]===newMap[i][0]){
-                continue
-            }
-            else{
-                print = true
-                break
-            }
-        }
+        // for(let i = 0; i < this.AccountMap.size; i++){
+        //     if(oldMap[i][0]===newMap[i][0]){
+        //         continue
+        //     }
+        //     else{
+        //         print = true
+        //         break
+        //     }
+        // }
         
-        if(print === true){
+        //if(print === true){
             let arr = Array.from(this.AccountMap)
             for(let i = 0; i < this.AccountMap.size; i++){
-                console.log(arr[i] + "\n")
+                console.log("ID: " + arr[i][0] + ", amount: "+ arr[i][1] +"\n")
             }
-        }
+        //}
     }
 
     CreateAccount(id : string, amount : number) : void{
