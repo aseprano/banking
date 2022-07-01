@@ -1,63 +1,35 @@
 import { BankAccount } from "./BankAccount";
 import { Store } from "./Store";
 import { Event } from "./Event";
+import { EventBus } from "./EventBus";
 
 export class BankAccountService{
     accounts : Store = new Store;
-    finalEvent : FinalEvent | undefined;
+
+    constructor(private eventbus : EventBus){
+        
+    }
 
     create(){
-        let max = 10000;
-        let id = Math.floor(Math.random() * (max + 1));
-        while(true){
-            let check = false;
-            for(let i = 0; i < this.accounts.accounts.length; i++){
-                if(this.accounts.accounts[i].getId() === id){
-                    id = Math.floor(Math.random() * (max + 1));
-                    check = false;
-                    break;
-                }
-                else{
-                    check = true;
-                }
-            }
-            if(check){
-                break;
-            }
-        }
         let account = new BankAccount();
-        account.setId(id)
-        this.accounts.add(account);
-        this.finalEvent = new FinalEvent("create", [id]);
+        const id = this.accounts.add(account);
+        this.eventbus.dispatch(new FinalEvent("create", [id]));
+        this.charge(id, 5);
     }
     charge(accountID : number, amount : number){
-        for(let i = 0; i < this.accounts.accounts.length; i++){
-            if(this.accounts.accounts[i].getId() === accountID){
-                this.accounts.accounts[i].charge(amount);
-            }
-        }
-        this.finalEvent = new FinalEvent("charge", [accountID, amount]);
+        const account = this.accounts.get(accountID);
+        account.charge(amount);
+        this.accounts.update(account);
+        this.eventbus.dispatch(new FinalEvent("charge", [accountID, amount]));
     }
     withdraw(accountID : number, amount : number){
-        for(let i = 0; i < this.accounts.accounts.length; i++){
-            if(this.accounts.accounts[i].getId() === accountID){
-                if(this.accounts.accounts[i].getBalance() < amount){
-                    break;
-                }
-                else{
-                    this.accounts.accounts[i].withdraw(amount);
-                }
-            }
-        }
-        this.finalEvent = new FinalEvent("withdraw", [accountID, amount]);
+        const account = this.accounts.get(accountID);
+        account.withdraw(amount);
+        this.accounts.update(account);
+        this.eventbus.dispatch(new FinalEvent("withdraw", [accountID, amount]));
     }
     getBalance(accountID : number){
-        for(let i = 0; i < this.accounts.accounts.length; i++){
-            if(this.accounts.accounts[i].getId() === accountID){
-                return this.accounts.accounts[i].getBalance();
-            }
-        }
-        this.finalEvent = new FinalEvent("getBalance", [accountID]);
+        return this.accounts.get(accountID)?.getBalance();
     }
 }
 

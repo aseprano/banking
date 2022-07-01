@@ -1,4 +1,5 @@
 import { BankAccountService } from "./BankAccountService";
+import { InsufficientFunsException } from "./InsufficientFundsExcpetion";
 
 export class BankAccount{
     id: number = 0;
@@ -14,6 +15,9 @@ export class BankAccount{
         this.balance += amount;
     }
     withdraw(amount : number){
+        if(this.balance < amount){
+            throw new InsufficientFunsException();
+        }
         this.balance -= amount;
     }
     getBalance(){
