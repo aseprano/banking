@@ -1,4 +1,0 @@
-export interface EventBus{
-    dispach(event);
-    subscribeTo(eventName, EventConsumer);
-}

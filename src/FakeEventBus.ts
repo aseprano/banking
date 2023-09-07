@@ -9,5 +9,4 @@ export class FakeEventBus implements EventBus{
     subscribeTo(eventName: string, eventConsumer: EventConsumer): void {
         
     }
-
 }
