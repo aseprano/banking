@@ -1,12 +1,13 @@
-export class BankAccount{
-    private var id: number;
-    private var balance: number;
+import { Id } from "./Id";
+import { InsufficientBalanceException } from "./InsufficientBalanceException";
 
-    public setId(newId:number):void{
+export class BankAccount{
+
+    public setId(newId:Id):void{
         this.id=newId;
     }
     
-    public getId():number{
+    public getId():Id{
         return this.id;
     }
 
@@ -15,11 +16,17 @@ export class BankAccount{
     }
 
     public withDraw(amount:number):void{
-        this.balance=this.balance-amount;
+        if(this.balance<amount){
+            throw new InsufficientBalanceException();
+        }
+
+        this.balance=this.balance-amount; 
     }
 
     public getBalance():number{
         return this.balance;
     }
+
+    public constructor(private id:Id,private balance:number){}
 
 }
