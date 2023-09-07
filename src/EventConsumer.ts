@@ -1,5 +1,5 @@
+import { Event } from "./Event";
+
 export abstract class EventConsumer{
-    public onEvent(){
-        
-    }
+    public abstract onEvent(event: Event): void
 }

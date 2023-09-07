@@ -3,12 +3,11 @@ export abstract class Event{
     private firedAt: string
     
     protected payload:{
-        [key: string]: any
-    };
+        [key: string]: any;
+    } ={};
 
-    public constructor()
-    {
-        this.firedAt=new Date().toISOString();
+    public constructor(){
+        this.firedAt=new Date().toISOString(); 
     }
 
     public abstract getName(): string
@@ -16,6 +15,7 @@ export abstract class Event{
     public getDate(d: string): string{
         return this.firedAt;
     }
+    
     public abstract getPayload(): {
         [key: string] :any
     }
