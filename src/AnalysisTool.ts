@@ -1,6 +1,7 @@
 import { Event } from "./Event";
+import { EventConsumer } from "./EventConsumer";
 
-export class AnalysisTool
+export class AnalysisTool extends EventConsumer
 {
     private balances=new Map<number,number>();
     private attributeId(event: Event):number
