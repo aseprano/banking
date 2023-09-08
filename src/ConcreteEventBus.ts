@@ -1,5 +1,5 @@
 import { Event } from "./Event";
-import { EventBus } from "./EventBus"
+import { EventBus } from "./EventBus";
 import { EventConsumer } from "./EventConsumer";
 
 export class ConcreteEventClass implements EventBus{
@@ -9,19 +9,19 @@ export class ConcreteEventClass implements EventBus{
     dispach(event: Event): void {
         const subscribers = this.subscribers.get(event.getName());
         if(subscribers==undefined){
-            return
+            return;
         }
         for(const subscriber of subscribers){
-            subscriber.onEvent(event)
+            subscriber.onEvent(event);
         }
     }
 
     subscribeTo(eventName: string, eventConsumer: EventConsumer): void {
-        if(this.subscribers.has(eventName)){
-            this.subscribers.get(eventName)?.push(eventConsumer);
+        if(!this.subscribers.has(eventName)){ 
+            this.subscribers.set(eventName, [eventConsumer]);
         }
         else{
-            this.subscribers.set(eventName, [eventConsumer]);
+            this.subscribers.get(eventName)?.push(eventConsumer);
         }
     }
 
