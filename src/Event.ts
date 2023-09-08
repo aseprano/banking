@@ -4,7 +4,7 @@ export abstract class Event{
     
     protected payload:{
         [key: string]: any;
-    }={};
+    } ={};  
 
     public constructor(){
         this.firedAt=new Date().toISOString(); 
