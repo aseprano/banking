@@ -10,7 +10,7 @@ const config: Config.InitialOptions = {
     collectCoverage: true,
     coverageDirectory: "coverage",
     roots: [
-        "spec",
+        "test",
     ],
     collectCoverageFrom: [
         "test/**/*.ts",

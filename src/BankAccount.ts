@@ -12,10 +12,16 @@ export class BankAccount{
     }
 
     public charge(amount:number):void{
+        if(amount<0){
+            throw new Error("amount cannot be negative");
+        }
         this.balance=this.balance+amount;
     }
 
     public withDraw(amount:number):void{
+        if(amount<0){
+            throw new Error("amount cannot be negative");
+        }
         if(this.balance<amount){
             throw new InsufficientBalanceException();
         }
@@ -27,6 +33,10 @@ export class BankAccount{
         return this.balance;
     }
 
-    public constructor(private id:Id,private balance:number){}
+    public constructor(private id:Id,private balance:number){
+        if(balance<0){
+            throw new InsufficientBalanceException();
+        }5
+    }
 
 }
