@@ -3,27 +3,35 @@ import { Event } from "./Event";
 export class AnalysisTool
 {
     private balances=new Map<number,number>();
-    public onEvent(event: Event):void
+    private attributeId(event: Event):number
     {
+        const id=event.getPayload().id??0;
+        return id;
+    }
+    private accountCharged(event: Event):number
+    {
+        const currentBalance=this.balances.get(this.attributeId(event))??0;
+        const newBalance=currentBalance+event.getPayload().amount;
+        return newBalance;
+    }
+    private accountDebited(event: Event):number
+    {
+        const currentBalance=this.balances.get(this.attributeId(event))??0;
+        const newBalance=currentBalance-event.getPayload().amount;
+        return newBalance;
+    }
+    public onEvent(event: Event):void
+    {        
         switch(event.getName())
         {
             case "BankAccountCreated":
-                const id=event.getPayload().id??0;
-                this.balances.set(id,0);
+                this.balances.set(this.attributeId(event),0);
                 break;
             case "BankAccountCharged":
-                const id=event.getPayload().id??0;
-                const amount=event.getPayload().amount;
-                const currentBalance=this.balances.get(id)??0;
-                const newBalance=currentBalance-amount;
-                this.balances.set(id,newBalance);
+                this.balances.set(this.attributeId(event),this.accountCharged(event));
                 break;
             case "BankAccountDebited":
-                const id=event.getPayload().id??0;
-                const amount=event.getPayload().amount;
-                const currentBalance=this.balances.get(id)??0;
-                const newBalance=currentBalance+amount;
-                this.balances.set(id, newBalance);
+                this.balances.set(this.attributeId(event), this.accountDebited(event));
                 break;
         }
     }
