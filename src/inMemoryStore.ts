@@ -4,6 +4,7 @@ import { Id } from "./Id";
 import { Store } from "./Store";
 
 class InMemoryStore implements Store{
+   //to get an account by Id
     public getById(id: Id): BankAccount {
        const account=this.accounts.get(id.toNumber());
        if(account==undefined) {
@@ -12,7 +13,7 @@ class InMemoryStore implements Store{
        
        return account;
     }
-
+   //to add an account to the MemoryStore
     public add(bankAccount: BankAccount): Id {
         if(bankAccount==undefined){
             throw new BankAccountNotFoundException();
@@ -23,7 +24,7 @@ class InMemoryStore implements Store{
         this.accounts.set(bankAccount.getId().toNumber(),bankAccount);
         return accountId;
     }
-
+   //to update an account
     public update(bankAccount: BankAccount): void {
         if(bankAccount==undefined){
             throw new BankAccountNotFoundException;
@@ -31,7 +32,7 @@ class InMemoryStore implements Store{
 
             this.accounts.set(bankAccount.getId().toNumber(),bankAccount);
     }
-
+   //to delete an account
     public delete(id: Id): void {
         const account=this.accounts.get(id.toNumber());
         if(account==undefined){

@@ -14,6 +14,7 @@ class BankAccountService{
         const account = new BankAccount(new Id(0),0);
         const accountId= this.store.add(account);
         this.eventBus.dispach(new BankAccountCreated(accountId));
+        this.charge(accountId,5);
         return accountId;
      }
     //to charge the customer's balance

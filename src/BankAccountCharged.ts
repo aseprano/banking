@@ -8,7 +8,7 @@ export class BankAccountCharged extends Event{
     public getPayload(): { [key: string]: any; } {
         return this.payload;
     }
-
+    //passing the Id and the charged amount to the payload
     public constructor(accountId:Id,amount:number){
         super();
         this.payload.id=accountId;
